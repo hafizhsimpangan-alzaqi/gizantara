@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         form.addEventListener('input', function (event) {
             const target = event.target;
-            if (!target) return;
+            if (!target || typeof target.setCustomValidity !== 'function') return;
             target.setCustomValidity('');
             if (target.checkValidity()) {
                 aturErrorField(target, '');
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         form.addEventListener('change', function (event) {
             const target = event.target;
-            if (!target || target.type === 'file') return;
+            if (!target || target.type === 'file' || typeof target.setCustomValidity !== 'function') return;
             target.setCustomValidity('');
             if (target.checkValidity()) {
                 aturErrorField(target, '');

@@ -10,6 +10,6 @@ try {
     $pangan = mysqli_fetch_assoc(mysqli_stmt_get_result($cek)) ?: null;
     mysqli_stmt_close($cek);
 } catch (Throwable $error) { error_log('Detail pangan gagal dimuat.'); http_response_code(500); exit('Detail belum dapat ditampilkan.'); }
-if (!$pangan) { http_response_code(404); $template='404.php'; $pesan_404='Bahan pangan tidak ditemukan.'; return; }
+if (!$pangan || ($pangan['moderation_status'] !== 'approved' && !boleh_ubah_konten($pangan['user_id']))) { http_response_code(404); $template='404.php'; $pesan_404='Bahan pangan tidak ditemukan.'; return; }
 $pangan['image_url'] = path_gambar_pangan($pangan['image']);
 $page_title = $pangan['name'];

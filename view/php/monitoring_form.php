@@ -17,7 +17,7 @@ if (!defined('APP_ENTRY')) {
 </section>
 
 <?php if ($pesan) : ?>
-    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert"><?= e($pesan['teks']) ?></p>
+    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert" data-flash data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p>
 <?php endif; ?>
 
 <form class="form-card form-stack" action="index.php?page=monitoring_save" method="post">

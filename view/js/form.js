@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     let confirmTrigger = null;
+    function tutupDialog(dialog) {
+        if (!dialog || !dialog.open || dialog.classList.contains('is-closing')) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { dialog.close(); return; }
+        dialog.classList.add('is-closing');
+        window.setTimeout(function () {
+            dialog.close();
+            dialog.classList.remove('is-closing');
+        }, 220);
+    }
     document.querySelectorAll('[data-open-confirm]').forEach(function (button) {
         button.addEventListener('click', function () {
             const dialog = document.getElementById(button.dataset.openConfirm);
@@ -37,12 +46,22 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-close-confirm]').forEach(function (button) {
         button.addEventListener('click', function () {
             const dialog = button.closest('dialog');
-            if (dialog) dialog.close();
+            tutupDialog(dialog);
         });
     });
     document.querySelectorAll('dialog.confirm-dialog').forEach(function (dialog) {
+        dialog.addEventListener('cancel', function (event) {
+            event.preventDefault();
+            tutupDialog(dialog);
+        });
         dialog.addEventListener('close', function () {
             if (confirmTrigger) confirmTrigger.focus();
+        });
+        dialog.querySelectorAll('form').forEach(function (dlgForm) {
+            dlgForm.addEventListener('submit', function (event) {
+                if (dlgForm.dataset.submitting === '1') { event.preventDefault(); return; }
+                dlgForm.dataset.submitting = '1';
+            });
         });
     });
 
@@ -73,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    [document.getElementById('form-user'), document.getElementById('register-form')].forEach(function (userForm) {
+    [document.getElementById('form-user'), document.getElementById('form-admin'), document.getElementById('register-form')].forEach(function (userForm) {
         if (!userForm) return;
         const password = userForm.querySelector('[name="password"]');
         const confirmation = userForm.querySelector('[name="confirm_password"]');

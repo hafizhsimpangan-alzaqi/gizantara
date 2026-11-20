@@ -54,7 +54,8 @@ try {
                 u.username AS author
             FROM articles a
             JOIN users u ON u.id = a.user_id
-            WHERE a.title LIKE ?
+            WHERE a.moderation_status = 'approved'
+              AND a.title LIKE ?
               AND (? = '' OR a.category = ?)
             ORDER BY a.created_at DESC, a.id DESC";
 

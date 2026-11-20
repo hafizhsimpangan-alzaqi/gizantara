@@ -17,9 +17,9 @@ try {
     if (!$ada) { mysqli_rollback($koneksi); http_response_code(404); exit('Bahan pangan tidak ditemukan.'); }
     if (!boleh_ubah_konten($pemilik)) { mysqli_rollback($koneksi); http_response_code(403); exit('Akses ditolak.'); }
     $sql = 'DELETE FROM foods WHERE id=?';
-    if (role_pengguna() !== 'admin') $sql .= ' AND user_id=?';
+    if (!adalah_admin()) $sql .= ' AND user_id=?';
     $hapus = mysqli_prepare($koneksi, $sql);
-    if (role_pengguna() === 'admin') mysqli_stmt_bind_param($hapus, 'i', $id_pangan);
+    if (adalah_admin()) mysqli_stmt_bind_param($hapus, 'i', $id_pangan);
     else { $id_user = id_user_login(); mysqli_stmt_bind_param($hapus, 'ii', $id_pangan, $id_user); }
     mysqli_stmt_execute($hapus);
     if (mysqli_stmt_affected_rows($hapus) !== 1) throw new RuntimeException('Bahan pangan tidak dapat dihapus.');

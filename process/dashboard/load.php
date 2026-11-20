@@ -1,11 +1,17 @@
 <?php
 if (!defined('APP_ENTRY')) { http_response_code(403); exit; }
 
-$dashboard_admin = role_pengguna() === 'admin';
+$dashboard_admin = adalah_admin();
+$dashboard_super_admin = adalah_super_admin();
 $id_user = id_user_login();
 $jumlah_user = 0;
+$jumlah_admin = 0;
 $jumlah_artikel = 0;
 $jumlah_pangan = 0;
+$jumlah_pending_artikel = 0;
+$jumlah_pending_pangan = 0;
+$status_artikel = ['pending' => 0, 'approved' => 0, 'rejected' => 0];
+$status_pangan = ['pending' => 0, 'approved' => 0, 'rejected' => 0];
 $jumlah_catatan = 0;
 $catatan_terakhir = null;
 
@@ -13,20 +19,39 @@ try {
     $koneksi = koneksi_database();
     if ($dashboard_admin) {
         $jumlah_user = (int) mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM users WHERE role = 'user'"))[0];
+        if ($dashboard_super_admin) {
+            $jumlah_admin = (int) mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM users WHERE role = 'admin'"))[0];
+        }
         $jumlah_artikel = (int) mysqli_fetch_row(mysqli_query($koneksi, 'SELECT COUNT(*) FROM articles'))[0];
         $jumlah_pangan = (int) mysqli_fetch_row(mysqli_query($koneksi, 'SELECT COUNT(*) FROM foods'))[0];
+        $jumlah_pending_artikel = (int) mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM articles WHERE moderation_status = 'pending'"))[0];
+        $jumlah_pending_pangan = (int) mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM foods WHERE moderation_status = 'pending'"))[0];
     } else {
-        $artikel = mysqli_prepare($koneksi, 'SELECT COUNT(*) FROM articles WHERE user_id = ?');
+        $artikel = mysqli_prepare(
+            $koneksi,
+            "SELECT COUNT(*),
+                    COALESCE(SUM(moderation_status = 'pending'), 0),
+                    COALESCE(SUM(moderation_status = 'approved'), 0),
+                    COALESCE(SUM(moderation_status = 'rejected'), 0)
+             FROM articles WHERE user_id = ?"
+        );
         mysqli_stmt_bind_param($artikel, 'i', $id_user);
         mysqli_stmt_execute($artikel);
-        mysqli_stmt_bind_result($artikel, $jumlah_artikel);
+        mysqli_stmt_bind_result($artikel, $jumlah_artikel, $status_artikel['pending'], $status_artikel['approved'], $status_artikel['rejected']);
         mysqli_stmt_fetch($artikel);
         mysqli_stmt_close($artikel);
 
-        $pangan = mysqli_prepare($koneksi, 'SELECT COUNT(*) FROM foods WHERE user_id = ?');
+        $pangan = mysqli_prepare(
+            $koneksi,
+            "SELECT COUNT(*),
+                    COALESCE(SUM(moderation_status = 'pending'), 0),
+                    COALESCE(SUM(moderation_status = 'approved'), 0),
+                    COALESCE(SUM(moderation_status = 'rejected'), 0)
+             FROM foods WHERE user_id = ?"
+        );
         mysqli_stmt_bind_param($pangan, 'i', $id_user);
         mysqli_stmt_execute($pangan);
-        mysqli_stmt_bind_result($pangan, $jumlah_pangan);
+        mysqli_stmt_bind_result($pangan, $jumlah_pangan, $status_pangan['pending'], $status_pangan['approved'], $status_pangan['rejected']);
         mysqli_stmt_fetch($pangan);
         mysqli_stmt_close($pangan);
     }

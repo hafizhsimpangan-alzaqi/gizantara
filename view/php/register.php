@@ -4,7 +4,7 @@
         <p class="eyebrow"><span class="eyebrow-line"></span> AKSES AKUN</p>
         <h1 id="register-title">Buat akun Gizantara</h1>
         <p class="page-lead">Daftar sebagai User untuk mulai menggunakan fitur personal Gizantara.</p>
-        <?php if ($pesan) : ?><p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert"><?= e($pesan['teks']) ?></p><?php endif; ?>
+        <?php if ($pesan) : ?><p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert" data-flash data-persist="<?= $pesan['jenis'] === 'error' ? 'true' : 'false' ?>" data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p><?php endif; ?>
         <form id="register-form" class="form-card form-stack" action="index.php?page=register" method="post">
             <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
             <div class="form-field">
@@ -35,7 +35,8 @@
         <p class="eyebrow">GIZANTARA / SDG 2 &amp; SDG 3</p>
         <h2>Pahami pangan.<br>Bangun kebiasaan baik.</h2>
         <p>Artikel, katalog pangan, dan catatan harian dalam satu ruang informasi yang mudah digunakan.</p>
-        <span class="auth-brand-foot">Informasi Pangan &amp; Kesehatan</span>
+        <img class="auth-brand-image" src="view/uploads/hero-food.webp" alt="" width="960" height="638" loading="lazy">
+        <span class="auth-brand-foot">Gizantara — Gizi &amp; Kesehatan untuk Nusantara</span>
     </div>
 </section>
 <script src="view/js/form.js" defer></script>

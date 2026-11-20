@@ -19,7 +19,7 @@ $catatan_terbaru = $daftar_catatan[0] ?? null;
 </section>
 
 <?php if ($pesan) : ?>
-    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert"><?= e($pesan['teks']) ?></p>
+    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert" data-flash data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p>
 <?php endif; ?>
 
 <section class="monitoring-workspace" aria-label="Ringkasan pribadi dan riwayat monitoring">

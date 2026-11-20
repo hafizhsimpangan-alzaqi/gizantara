@@ -4,12 +4,12 @@ require_once __DIR__ . '/../common/upload.php';
 
 try {
     $koneksi = koneksi_database();
-    if (role_pengguna() === 'admin') {
-        $hasil = mysqli_query($koneksi, 'SELECT a.id, a.title, a.category, a.cover_image, a.created_at, u.username AS author
+    if (adalah_admin()) {
+        $hasil = mysqli_query($koneksi, 'SELECT a.id, a.title, a.category, a.cover_image, a.moderation_status, a.moderated_at, a.rejection_reason, a.created_at, u.username AS author
             FROM articles a JOIN users u ON u.id = a.user_id ORDER BY a.created_at DESC, a.id DESC');
     } else {
         $id_user = id_user_login();
-        $periksa = mysqli_prepare($koneksi, 'SELECT a.id, a.title, a.category, a.cover_image, a.created_at, u.username AS author
+        $periksa = mysqli_prepare($koneksi, 'SELECT a.id, a.title, a.category, a.cover_image, a.moderation_status, a.moderated_at, a.rejection_reason, a.created_at, u.username AS author
             FROM articles a JOIN users u ON u.id = a.user_id WHERE a.user_id = ? ORDER BY a.created_at DESC, a.id DESC');
         mysqli_stmt_bind_param($periksa, 'i', $id_user);
         mysqli_stmt_execute($periksa);

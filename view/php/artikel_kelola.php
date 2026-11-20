@@ -13,11 +13,11 @@ if (!defined('APP_ENTRY')) {
 <section class="page-intro private-intro">
     <p class="eyebrow"><span class="eyebrow-line"></span> KONTEN EDUKATIF</p>
     <h1>Manajemen Artikel</h1>
-    <p class="page-lead"><?= $user_role === 'admin' ? 'Kelola seluruh artikel pangan dan kesehatan.' : 'Kelola artikel pangan dan kesehatan yang Anda tulis.' ?></p>
+    <p class="page-lead"><?= in_array($user_role ?? '', ['admin', 'super_admin'], true) ? 'Kelola seluruh artikel pangan dan kesehatan.' : 'Kelola artikel pangan dan kesehatan yang Anda tulis. Artikel User memerlukan persetujuan Admin sebelum tampil publik.' ?></p>
 </section>
 
 <?php if ($pesan) : ?>
-    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert"><?= e($pesan['teks']) ?></p>
+    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert" data-flash data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p>
 <?php endif; ?>
 
 <section class="private-toolbar">
@@ -32,7 +32,7 @@ if (!defined('APP_ENTRY')) {
     <div class="empty-state">
         <span class="empty-mark" aria-hidden="true"></span>
         <h3>Belum ada artikel</h3>
-        <p>Artikel yang disimpan akan tampil di sini dan langsung dapat dibaca publik.</p>
+        <p>Artikel yang Anda tulis akan ditinjau Admin terlebih dahulu sebelum tampil di halaman publik.</p>
         <a class="button button-primary" href="index.php?page=artikel_form">Tulis artikel</a>
     </div>
 <?php else : ?>
@@ -42,6 +42,7 @@ if (!defined('APP_ENTRY')) {
                 <tr>
                     <th scope="col">Artikel</th>
                     <th scope="col">Kategori</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Penulis</th>
                     <th scope="col">Dibuat</th>
                     <th scope="col">Aksi</th>
@@ -49,6 +50,11 @@ if (!defined('APP_ENTRY')) {
             </thead>
             <tbody>
                 <?php foreach ($daftar_kelola as $item) : ?>
+                    <?php
+                    $st = $item['moderation_status'] ?? 'approved';
+                    $st_label = $st === 'approved' ? 'Disetujui' : ($st === 'rejected' ? 'Ditolak' : 'Menunggu');
+                    $st_class = $st === 'approved' ? 'badge-success' : ($st === 'rejected' ? 'badge-danger' : 'badge-warning');
+                    ?>
                     <tr>
                         <td>
                             <div class="managed-article-title">
@@ -61,6 +67,12 @@ if (!defined('APP_ENTRY')) {
                             </div>
                         </td>
                         <td><span class="badge-tag"><?= e($item['category']) ?></span></td>
+                        <td>
+                            <span class="badge-tag <?= $st_class ?>"><?= e($st_label) ?></span>
+                            <?php if ($st === 'rejected' && !empty($item['rejection_reason'])) : ?>
+                                <small class="moderation-reason"><?= e($item['rejection_reason']) ?></small>
+                            <?php endif; ?>
+                        </td>
                         <td><?= e($item['author']) ?></td>
                         <td><?= e(date('d/m/Y', strtotime($item['created_at']))) ?></td>
                         <td>
@@ -78,6 +90,11 @@ if (!defined('APP_ENTRY')) {
 
     <div class="user-card-list">
         <?php foreach ($daftar_kelola as $item) : ?>
+            <?php
+            $st = $item['moderation_status'] ?? 'approved';
+            $st_label = $st === 'approved' ? 'Disetujui' : ($st === 'rejected' ? 'Ditolak' : 'Menunggu');
+            $st_class = $st === 'approved' ? 'badge-success' : ($st === 'rejected' ? 'badge-danger' : 'badge-warning');
+            ?>
             <article class="user-card article-manage-card">
                 <div class="card-manage-header">
                     <?php if (!empty($item['cover_url'])) : ?>
@@ -86,9 +103,12 @@ if (!defined('APP_ENTRY')) {
                         <span class="card-manage-thumb managed-cover-fallback" aria-hidden="true">+</span>
                     <?php endif; ?>
                     <div class="card-manage-title-wrap">
-                        <p class="category-label"><?= e($item['category']) ?></p>
+                        <p class="category-label"><?= e($item['category']) ?> · <span class="badge-tag <?= $st_class ?>"><?= e($st_label) ?></span></p>
                         <h3><a href="index.php?page=artikel_detail&amp;id=<?= e($item['id']) ?>"><?= e($item['title']) ?></a></h3>
                         <small><?= e($item['author']) ?> · <?= e(date('d/m/Y', strtotime($item['created_at']))) ?></small>
+                        <?php if ($st === 'rejected' && !empty($item['rejection_reason'])) : ?>
+                            <small class="moderation-reason">Alasan penolakan: <?= e($item['rejection_reason']) ?></small>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="record-actions">

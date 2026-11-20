@@ -25,7 +25,7 @@ $error_targets = [
 <?php endif; ?>
 
 <?php if ($pesan) : ?>
-    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="status"><?= e($pesan['teks']) ?></p>
+    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="status" data-flash data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p>
 <?php endif; ?>
 
 <div class="profile-layout">
@@ -38,7 +38,7 @@ $error_targets = [
                 <h2 id="informasi-akun">Informasi Akun</h2>
                 <p>Ringkasan identitas akun Anda.</p>
             </div>
-            <span class="profile-role"><?= e($profil['role'] === 'admin' ? 'Admin' : 'User') ?></span>
+            <span class="profile-role"><?= e(label_role($profil['role'])) ?></span>
         </div>
         <dl class="profile-details">
             <div><dt>Username</dt><dd><?= e($profil['username']) ?></dd></div>

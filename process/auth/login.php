@@ -62,6 +62,8 @@ $id_user = null;
 $hash = null;
 $role = null;
 $username_akun = null;
+$status_akun = null;
+$ban_reason = null;
 $ditemukan = false;
 $rate_limit_account_id = null;
 
@@ -71,7 +73,7 @@ try {
     // Identifier bisa cocok ke username maupun email; dua akun yang cocok ditolak.
     $periksa = mysqli_prepare(
         $koneksi,
-        'SELECT id, password_hash, role, username
+        'SELECT id, password_hash, role, username, status, ban_reason
          FROM users
          WHERE username = ? OR email = ?
          LIMIT 2'
@@ -81,7 +83,7 @@ try {
     mysqli_stmt_execute($periksa);
     mysqli_stmt_store_result($periksa);
     if (mysqli_stmt_num_rows($periksa) === 1) {
-        mysqli_stmt_bind_result($periksa, $id_user, $hash, $role, $username_akun);
+        mysqli_stmt_bind_result($periksa, $id_user, $hash, $role, $username_akun, $status_akun, $ban_reason);
         $ditemukan = mysqli_stmt_fetch($periksa);
     }
 
@@ -165,11 +167,21 @@ if (!login_rate_limit_finish(
 // Validasi identitas dan role dari database
 if (
     !is_numeric($id_user) ||
-    !in_array($role, ['admin', 'user'], true)
+    !in_array($role, ['super_admin', 'admin', 'user'], true)
 ) {
     error_log('Data identitas atau role pengguna tidak valid.');
     http_response_code(503);
     exit('Layanan masuk sedang tidak tersedia. Coba lagi nanti.');
+}
+
+// Tolak akun yang diblokir sebelum membuat session login
+if ($status_akun !== 'active') {
+    $pesan_blokir = 'Akun Anda sedang diblokir.';
+    if (is_string($ban_reason) && trim($ban_reason) !== '') {
+        $pesan_blokir .= ' Alasan: ' . trim($ban_reason);
+    }
+    pesan_sekali($pesan_blokir);
+    redirect_ke('login');
 }
 
 // Regenerasi session setelah login

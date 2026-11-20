@@ -16,7 +16,7 @@ if (!defined('APP_ENTRY')) {
 </section>
 
 <?php if ($pesan) : ?>
-    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert"><?= e($pesan['teks']) ?></p>
+    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert" data-flash data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p>
 <?php endif; ?>
 
 <section class="private-toolbar">
@@ -42,21 +42,32 @@ if (!defined('APP_ENTRY')) {
                     <th scope="col">No.</th>
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Role</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Dibuat</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($daftar_users as $nomor => $user) : ?>
+                    <?php $is_banned = ($user['status'] ?? 'active') === 'banned'; ?>
                     <tr>
                         <td><?= $nomor + 1 ?></td>
                         <td><strong><?= e($user['username']) ?></strong></td>
                         <td><?= $user['email'] ? e($user['email']) : 'Belum diisi' ?></td>
-                        <td><span class="badge-tag">User</span></td>
+                        <td>
+                            <span class="badge-tag <?= $is_banned ? 'badge-danger' : 'badge-success' ?>"><?= $is_banned ? 'Diblokir' : 'Aktif' ?></span>
+                            <?php if ($is_banned && !empty($user['ban_reason'])) : ?>
+                                <small class="moderation-reason"><?= e($user['ban_reason']) ?></small>
+                            <?php endif; ?>
+                        </td>
                         <td><?= e(date('d/m/Y', strtotime($user['created_at']))) ?></td>
                         <td>
                             <div class="record-actions">
+                                <?php if ($is_banned) : ?>
+                                    <button class="button button-secondary" type="button" data-open-confirm="user-unban-dialog" data-user-id="<?= e($user['id']) ?>" data-user-name="<?= e($user['username']) ?>">Buka Blokir</button>
+                                <?php else : ?>
+                                    <button class="button button-secondary button-danger-subtle" type="button" data-open-confirm="user-ban-dialog" data-user-id="<?= e($user['id']) ?>" data-user-name="<?= e($user['username']) ?>">Blokir</button>
+                                <?php endif; ?>
                                 <button class="button button-secondary button-danger-subtle" type="button" data-open-confirm="user-delete-dialog" data-user-id="<?= e($user['id']) ?>" data-user-name="<?= e($user['username']) ?>">Hapus</button>
                             </div>
                         </td>
@@ -68,22 +79,59 @@ if (!defined('APP_ENTRY')) {
 
     <div class="user-card-list">
         <?php foreach ($daftar_users as $user) : ?>
+            <?php $is_banned = ($user['status'] ?? 'active') === 'banned'; ?>
             <article class="user-card user-manage-card">
                 <div class="user-card-header">
                     <div>
                         <strong><?= e($user['username']) ?></strong>
                         <small><?= $user['email'] ? e($user['email']) : 'Email belum diisi' ?></small>
                         <small>Dibuat <?= e(date('d/m/Y', strtotime($user['created_at']))) ?></small>
+                        <?php if ($is_banned && !empty($user['ban_reason'])) : ?>
+                            <small class="moderation-reason">Alasan blokir: <?= e($user['ban_reason']) ?></small>
+                        <?php endif; ?>
                     </div>
-                    <span class="badge-tag">User</span>
+                    <span class="badge-tag <?= $is_banned ? 'badge-danger' : 'badge-success' ?>"><?= $is_banned ? 'Diblokir' : 'Aktif' ?></span>
                 </div>
                 <div class="record-actions">
+                    <?php if ($is_banned) : ?>
+                        <button class="button button-secondary" type="button" data-open-confirm="user-unban-dialog" data-user-id="<?= e($user['id']) ?>" data-user-name="<?= e($user['username']) ?>">Buka Blokir</button>
+                    <?php else : ?>
+                        <button class="button button-secondary button-danger-subtle" type="button" data-open-confirm="user-ban-dialog" data-user-id="<?= e($user['id']) ?>" data-user-name="<?= e($user['username']) ?>">Blokir</button>
+                    <?php endif; ?>
                     <button class="button button-secondary button-danger-subtle" type="button" data-open-confirm="user-delete-dialog" data-user-id="<?= e($user['id']) ?>" data-user-name="<?= e($user['username']) ?>">Hapus</button>
                 </div>
             </article>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
+
+<dialog class="confirm-dialog" id="user-ban-dialog" aria-labelledby="ban-user-title">
+    <h2 id="ban-user-title">Blokir akun User?</h2>
+    <p>Akun <strong data-delete-name></strong> tidak akan dapat masuk atau mengakses fitur privat sampai blokir dibuka. Konten yang sudah ada tidak dihapus.</p>
+    <form action="index.php?page=user_ban" method="post" class="form-stack">
+        <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
+        <input type="hidden" name="id" data-delete-id>
+        <div class="form-field">
+            <label for="user-ban-reason">Alasan pemblokiran</label>
+            <input id="user-ban-reason" name="ban_reason" maxlength="255" required placeholder="Contoh: Pelanggaran ketentuan komunitas">
+        </div>
+        <div class="record-actions">
+            <button class="button button-secondary" type="button" data-close-confirm>Batal</button>
+            <button class="button button-danger" type="submit">Ya, Blokir User</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog class="confirm-dialog" id="user-unban-dialog" aria-labelledby="unban-user-title">
+    <h2 id="unban-user-title">Buka blokir akun User?</h2>
+    <p>Akun <strong data-delete-name></strong> akan diaktifkan kembali dan dapat masuk seperti biasa.</p>
+    <form action="index.php?page=user_unban" method="post">
+        <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
+        <input type="hidden" name="id" data-delete-id>
+        <button class="button button-secondary" type="button" data-close-confirm>Batal</button>
+        <button class="button button-primary" type="submit">Ya, Aktifkan Akun</button>
+    </form>
+</dialog>
 
 <dialog class="confirm-dialog" id="user-delete-dialog" aria-labelledby="delete-user-title">
     <h2 id="delete-user-title">Hapus akun User?</h2>

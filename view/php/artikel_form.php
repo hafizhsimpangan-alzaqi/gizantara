@@ -17,7 +17,7 @@ if (!defined('APP_ENTRY')) {
 </section>
 
 <?php if ($pesan) : ?>
-    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert"><?= e($pesan['teks']) ?></p>
+    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert" data-flash data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p>
 <?php endif; ?>
 
 <form class="form-card form-stack" id="article-form" action="index.php?page=artikel_save" method="post" enctype="multipart/form-data" data-live-upload>
@@ -48,7 +48,7 @@ if (!defined('APP_ENTRY')) {
         <input id="article-cover" type="file" name="cover" accept="image/jpeg,image/png,image/webp" data-image-preview aria-describedby="article-cover-error">
         <small class="field-error" id="article-cover-error" hidden></small>
         <div class="cover-preview" data-preview-wrap <?= empty($artikel_form['cover_url']) ? 'hidden' : '' ?>>
-            <img data-preview-image src="<?= e($artikel_form['cover_url'] ?? '') ?>" alt="Pratinjau gambar sampul artikel">
+            <img data-preview-image <?= !empty($artikel_form['cover_url']) ? 'src="' . e($artikel_form['cover_url']) . '"' : '' ?> alt="Pratinjau gambar sampul artikel">
             <p data-preview-caption><?= !empty($artikel_form['cover_url']) ? 'Sampul saat ini. Tanpa file baru, sampul ini tetap dipakai.' : '' ?></p>
         </div>
     </div>

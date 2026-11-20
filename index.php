@@ -13,6 +13,9 @@ $routes = [
     'register' => ['register.php', 'Daftar'],
     'dashboard' => ['dashboard.php', 'Dashboard', 'private'],
     'users' => ['users.php', 'Manajemen User', 'admin'],
+    'admins' => ['admins.php', 'Manajemen Admin', 'super_admin'],
+    'moderasi_artikel' => ['moderasi_artikel.php', 'Moderasi Artikel', 'admin'],
+    'moderasi_pangan' => ['moderasi_pangan.php', 'Moderasi Pangan', 'admin'],
     'profil' => ['profil.php', 'Profil Saya', 'private'],
     'artikel_kelola' => ['artikel_kelola.php', 'Manajemen Artikel', 'private'],
     'artikel_form' => ['artikel_form.php', 'Form Artikel', 'private'],
@@ -32,6 +35,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         'logout' => 'auth/logout.php',
         'user_create' => 'auth/create_user.php',
         'user_delete' => 'auth/delete_user.php',
+        'user_ban' => 'auth/ban_user.php',
+        'user_unban' => 'auth/ban_user.php',
+        'admin_create' => 'auth/create_admin.php',
+        'admin_delete' => 'auth/delete_admin.php',
+        'admin_ban' => 'auth/ban_user.php',
+        'admin_unban' => 'auth/ban_user.php',
+        'moderasi_artikel_action' => 'moderasi/action.php',
+        'moderasi_pangan_action' => 'moderasi/action.php',
         'profil_username' => 'auth/update_profile.php',
         'profil_password' => 'auth/update_profile.php',
         'artikel_save' => 'artikel/save.php',
@@ -73,6 +84,7 @@ if (!is_string($page) || !isset($routes[$page])) {
     $akses = $routes[$page][2] ?? 'public';
     if ($akses === 'private') wajib_login();
     if ($akses === 'admin') wajib_admin();
+    if ($akses === 'super_admin') wajib_super_admin();
     $page_title = $routes[$page][1];
     $template = $routes[$page][0];
     $active_page = in_array($page, ['artikel', 'artikel_detail'], true) ? 'artikel'
@@ -89,6 +101,8 @@ if (!is_string($page) || !isset($routes[$page])) {
     }
     if ($page === 'dashboard') require __DIR__ . '/process/dashboard/load.php';
     if ($page === 'users') require __DIR__ . '/process/auth/load_users.php';
+    if ($page === 'admins') require __DIR__ . '/process/auth/load_admins.php';
+    if (in_array($page, ['moderasi_artikel', 'moderasi_pangan'], true)) require __DIR__ . '/process/moderasi/load.php';
     if ($page === 'profil') require __DIR__ . '/process/auth/load_profile.php';
     if ($page === 'artikel_kelola') require __DIR__ . '/process/artikel/load.php';
     if ($page === 'artikel_form') require __DIR__ . '/process/artikel/load_form.php';

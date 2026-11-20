@@ -11,32 +11,47 @@ if (!defined('APP_ENTRY')) {
 ?>
 <section class="hero" aria-labelledby="hero-title">
     <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> Pangan yang baik. Hidup yang sehat.</p>
-        <h1 id="hero-title">Kenali pangan.<br><span class="headline-accent">Rawat kesehatan.</span></h1>
-        <p class="hero-description">Jelajahi informasi pangan dan kesehatan untuk mendukung pilihan sehari-hari yang lebih sadar.</p>
+        <p class="eyebrow">GIZANTARA · GIZI &amp; KESEHATAN UNTUK NUSANTARA</p>
+        <h1 id="hero-title">Kenali Pangan, Pahami Gizi, <span class="headline-accent">Bangun Kebiasaan Sehat.</span></h1>
+        <p class="hero-description">Gizantara menyatukan bacaan edukatif, informasi gizi bahan pangan, dan alat untuk memahami kebiasaan sehari-hari.</p>
         <div class="hero-actions">
-            <a class="button button-primary" href="index.php?page=artikel">Jelajahi artikel <span aria-hidden="true">↗</span></a>
-            <a class="button button-secondary" href="index.php?page=pangan">Lihat katalog pangan</a>
+            <a class="button button-primary" href="index.php?page=pangan">Jelajahi katalog pangan <span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="index.php?page=about">Kenali tujuan kami</a>
         </div>
         <p class="hero-disclaimer">Informasi edukatif — bukan pengganti saran tenaga kesehatan.</p>
     </div>
     <div class="hero-food">
         <img class="hero-food-img" src="view/uploads/hero-food.webp" alt="Sepiring hidangan gado-gado bernutrisi dengan sayuran segar, telur rebus, tahu, dan saus kacang bergizi seimbang" width="960" height="638" loading="eager" decoding="async">
-        <span class="hero-food-caption">Pangan bernutrisi · SDG 2 &amp; SDG 3</span>
+        <span class="hero-food-caption">Pangan sehari-hari · SDG 2 &amp; SDG 3</span>
     </div>
 </section>
 
 <section class="sdg-strip" aria-label="Fokus platform">
     <article class="sdg-card sdg-food">
         <span class="sdg-number">02</span>
-        <div><p class="eyebrow">SDG 2</p><h2>Tanpa kelaparan</h2><p>Akses informasi pangan dan komposisi gizi yang bersumber.</p></div>
+        <div><p class="eyebrow">SDG 2</p><h2>Tanpa kelaparan</h2><p>Tujuan global ini mencakup ketahanan pangan dan perbaikan gizi. Di sini, Anda dapat mengenal bahan pangan serta komposisi gizinya.</p><a class="sdg-source" href="https://sdgs.un.org/goals/goal2" rel="noopener noreferrer">Sumber: PBB ↗</a></div>
         <span class="sdg-shape" aria-hidden="true"></span>
     </article>
     <article class="sdg-card sdg-health">
         <span class="sdg-number">03</span>
-        <div><p class="eyebrow">SDG 3</p><h2>Kehidupan sehat</h2><p>Artikel kesehatan untuk menambah wawasan dan pemahaman.</p></div>
+        <div><p class="eyebrow">SDG 3</p><h2>Kehidupan sehat dan sejahtera</h2><p>Tujuan global ini mendorong kehidupan sehat dan kesejahteraan. Artikel serta catatan kebiasaan membantu Anda belajar dan berefleksi.</p><a class="sdg-source" href="https://sdgs.un.org/goals/goal3" rel="noopener noreferrer">Sumber: PBB ↗</a></div>
         <span class="sdg-shape" aria-hidden="true"></span>
     </article>
+</section>
+
+<section class="wellness-connection content-section" aria-labelledby="connection-title">
+    <div class="connection-copy"><p class="eyebrow">PANGAN &amp; KESEHATAN</p><h2 id="connection-title">Pengetahuan pangan membantu memahami pilihan sehari-hari.</h2><p>SDG 2 menyoroti akses pangan dan perbaikan gizi; SDG 3 menyoroti kesehatan dan kesejahteraan. Gizantara menghubungkan keduanya melalui informasi bahan pangan, artikel edukatif, dan ruang pencatatan kebiasaan. Platform ini tidak mengukur dampak terhadap target SDG.</p></div>
+    <div class="connection-steps" role="group" aria-label="Cara menggunakan Gizantara"><span>01 <strong>Kenali bahan pangan</strong></span><span>02 <strong>Pahami komposisi gizi</strong></span><span>03 <strong>Catat kebiasaan sehat</strong></span></div>
+</section>
+
+<section class="content-section" aria-labelledby="features-title">
+    <div class="section-heading"><div><p class="eyebrow">FITUR GIZANTARA</p><h2 id="features-title">Temukan yang Anda butuhkan</h2></div></div>
+    <div class="feature-grid">
+        <a class="feature-card" href="index.php?page=artikel"><span aria-hidden="true">↗</span><h3>Artikel Edukasi</h3><p>Jelajahi bacaan pangan, gizi, dan kesehatan.</p></a>
+        <a class="feature-card" href="index.php?page=pangan"><span aria-hidden="true">◯</span><h3>Katalog Pangan</h3><p>Lihat komposisi gizi bahan pangan per 100 gram.</p></a>
+        <a class="feature-card" href="index.php?page=<?= pengguna_login() ? 'kalkulator' : 'login' ?>"><span aria-hidden="true">＋</span><h3>Kalkulator Gizi</h3><p>Perkirakan kandungan gizi satu bahan sesuai beratnya. Perlu masuk.</p></a>
+        <a class="feature-card" href="index.php?page=<?= pengguna_login() ? 'monitoring' : 'login' ?>"><span aria-hidden="true">✓</span><h3>Monitoring Pola Hidup</h3><p>Catat air minum, tidur, dan aktivitas fisik pribadi. Perlu masuk.</p></a>
+    </div>
 </section>
 
 <section class="content-section" aria-labelledby="latest-articles">
@@ -68,7 +83,6 @@ if (!defined('APP_ENTRY')) {
         </div>
     <?php endif; ?>
 </section>
-
 <section class="content-section food-section" aria-labelledby="latest-foods">
     <div class="section-heading">
         <div><p class="eyebrow">BAHAN &amp; KOMPOSISI</p><h2 id="latest-foods">Jelajahi bahan pangan</h2></div>
@@ -96,3 +110,4 @@ if (!defined('APP_ENTRY')) {
         </div>
     <?php endif; ?>
 </section>
+<section class="home-cta content-section" aria-labelledby="home-cta-title"><div><p class="eyebrow">MULAI MENJELAJAH</p><h2 id="home-cta-title">Informasi yang lebih mudah dipahami, pilihan yang lebih sadar.</h2><p>Mulai dari bacaan singkat atau cari bahan pangan yang ingin Anda kenali.</p></div><div class="hero-actions"><a class="button button-primary" href="index.php?page=artikel">Baca artikel</a><a class="button button-secondary" href="index.php?page=pangan">Buka katalog</a></div></section>

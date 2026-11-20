@@ -9,9 +9,9 @@ if (!defined('APP_ENTRY')) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#F8FAFC">
-    <meta name="description" content="Informasi pangan, gizi, dan kesehatan yang mudah dijelajahi.">
-    <title><?= e($page_title) ?> — Platform Informasi Pangan, Gizi, dan Kesehatan</title>
+    <meta name="theme-color" content="#175C51">
+    <meta name="description" content="Gizantara — Gizi &amp; Kesehatan untuk Nusantara. Kenali pangan dan bangun kebiasaan sehat.">
+    <title><?= e($page_title) ?> — Gizantara</title>
     <link rel="stylesheet" href="view/css/style.css">
     <link rel="stylesheet" href="view/css/navigation.css">
     <link rel="stylesheet" href="view/css/article.css">

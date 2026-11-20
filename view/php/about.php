@@ -7,15 +7,13 @@ if (!defined('APP_ENTRY')) {
 <article class="about-page">
     <section class="about-hero" aria-labelledby="about-title">
         <div class="about-hero-copy">
-            <p class="eyebrow"><span class="eyebrow-line"></span> TENTANG PLATFORM</p>
+            <p class="eyebrow">TENTANG PLATFORM</p>
             <h1 id="about-title">Mengenal pangan, memahami kesehatan.</h1>
             <p class="hero-description">Platform informasi pangan, gizi, dan kesehatan untuk membantu masyarakat memahami pilihan dan kebiasaan sehari-hari.</p>
         </div>
-        <div class="about-art" role="img" aria-label="Aksen geometris untuk SDG 2 dan SDG 3">
-            <span class="about-art-label">SDG 02 <span aria-hidden="true">/</span> SDG 03</span>
-            <span class="about-art-circle" aria-hidden="true"></span>
-            <span class="about-art-square" aria-hidden="true"></span>
-            <span class="about-art-line" aria-hidden="true"></span>
+        <div class="about-art">
+            <img src="view/uploads/hero-food.webp" alt="Hidangan gado-gado dengan sayuran, telur, dan tahu sebagai contoh pangan sehari-hari" width="960" height="638" loading="eager">
+            <div class="about-art-label" role="group" aria-label="Fokus SDG"><span>SDG 2 · Tanpa Kelaparan</span><span>SDG 3 · Kehidupan Sehat</span></div>
         </div>
     </section>
 
@@ -71,4 +69,5 @@ if (!defined('APP_ENTRY')) {
         <span class="about-disclaimer-mark" aria-hidden="true">i</span>
         <p>Informasi pada website bersifat edukatif dan tidak menggantikan diagnosis atau saran dari tenaga kesehatan profesional.</p>
     </aside>
+    <section class="home-cta content-section" aria-labelledby="about-cta-title"><div><p class="eyebrow">LANJUTKAN EKSPLORASI</p><h2 id="about-cta-title">Mulai dari pangan yang akrab di keseharian.</h2><p>Jelajahi katalog dan bacaan untuk memperluas pemahaman Anda.</p></div><div class="hero-actions"><a class="button button-primary" href="index.php?page=pangan">Lihat katalog pangan</a><a class="button button-secondary" href="index.php?page=artikel">Baca artikel</a></div></section>
 </article>

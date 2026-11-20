@@ -133,24 +133,30 @@ try {
     if ($id_artikel) {
 
         // UPDATE artikel
-        if (role_pengguna() === 'admin') {
+        if (adalah_admin()) {
+            $id_moderator = id_user_login();
             $simpan = mysqli_prepare(
                 $koneksi,
-                'UPDATE articles
+                "UPDATE articles
                  SET title = ?,
                      category = ?,
                      body_delta = ?,
-                     cover_image = ?
-                 WHERE id = ?'
+                     cover_image = ?,
+                     moderation_status = 'approved',
+                     moderated_at = NOW(),
+                     moderated_by = ?,
+                     rejection_reason = NULL
+                 WHERE id = ?"
             );
 
             mysqli_stmt_bind_param(
                 $simpan,
-                'ssssi',
+                'ssssii',
                 $judul,
                 $kategori,
                 $konten,
                 $sampul,
+                $id_moderator,
                 $id_artikel
             );
 
@@ -159,12 +165,16 @@ try {
 
             $simpan = mysqli_prepare(
                 $koneksi,
-                'UPDATE articles
+                "UPDATE articles
                  SET title = ?,
                      category = ?,
                      body_delta = ?,
-                     cover_image = ?
-                 WHERE id = ? AND user_id = ?'
+                     cover_image = ?,
+                     moderation_status = 'pending',
+                     moderated_at = NULL,
+                     moderated_by = NULL,
+                     rejection_reason = NULL
+                 WHERE id = ? AND user_id = ?"
             );
 
             mysqli_stmt_bind_param(
@@ -186,22 +196,40 @@ try {
 
         // Kolom body_delta dipertahankan,
         // tetapi nilainya adalah HTML tersanitasi.
-        $simpan = mysqli_prepare(
-            $koneksi,
-            'INSERT INTO articles
-             (user_id, title, category, body_delta, cover_image)
-             VALUES (?, ?, ?, ?, ?)'
-        );
-
-        mysqli_stmt_bind_param(
-            $simpan,
-            'issss',
-            $id_user,
-            $judul,
-            $kategori,
-            $konten,
-            $sampul
-        );
+        if (adalah_admin()) {
+            $simpan = mysqli_prepare(
+                $koneksi,
+                "INSERT INTO articles
+                 (user_id, title, category, body_delta, cover_image, moderation_status, moderated_at, moderated_by)
+                 VALUES (?, ?, ?, ?, ?, 'approved', NOW(), ?)"
+            );
+            mysqli_stmt_bind_param(
+                $simpan,
+                'issssi',
+                $id_user,
+                $judul,
+                $kategori,
+                $konten,
+                $sampul,
+                $id_user
+            );
+        } else {
+            $simpan = mysqli_prepare(
+                $koneksi,
+                "INSERT INTO articles
+                 (user_id, title, category, body_delta, cover_image, moderation_status)
+                 VALUES (?, ?, ?, ?, ?, 'pending')"
+            );
+            mysqli_stmt_bind_param(
+                $simpan,
+                'issss',
+                $id_user,
+                $judul,
+                $kategori,
+                $konten,
+                $sampul
+            );
+        }
     }
 
     // Jalankan query

@@ -17,7 +17,7 @@ if (!defined('APP_ENTRY')) {
 </section>
 
 <?php if ($pesan) : ?>
-    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert"><?= e($pesan['teks']) ?></p>
+    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert" data-flash data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p>
 <?php endif; ?>
 
 <form class="form-card form-stack" action="index.php?page=pangan_save" method="post" enctype="multipart/form-data" data-live-upload>
@@ -49,7 +49,7 @@ if (!defined('APP_ENTRY')) {
         <input id="food-image" type="file" name="image" accept="image/jpeg,image/png,image/webp" data-image-preview aria-describedby="food-image-error">
         <small class="field-error" id="food-image-error" hidden></small>
         <div class="cover-preview" data-preview-wrap <?= empty($pangan_form['image_url']) ? 'hidden' : '' ?>>
-            <img data-preview-image src="<?= e($pangan_form['image_url'] ?? '') ?>" alt="Pratinjau gambar bahan pangan">
+            <img data-preview-image <?= !empty($pangan_form['image_url']) ? 'src="' . e($pangan_form['image_url']) . '"' : '' ?> alt="Pratinjau gambar bahan pangan">
             <p data-preview-caption><?= !empty($pangan_form['image_url']) ? 'Gambar saat ini; tetap dipakai jika tidak ada file baru.' : '' ?></p>
         </div>
     </div>

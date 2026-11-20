@@ -16,7 +16,7 @@ if (!defined('APP_ENTRY')) {
 </section>
 
 <?php if ($pesan) : ?>
-    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert"><?= e($pesan['teks']) ?></p>
+    <p class="form-status <?= $pesan['jenis'] === 'error' ? 'is-error' : '' ?>" role="alert" data-flash data-kind="<?= e($pesan['jenis']) ?>"><?= e($pesan['teks']) ?></p>
 <?php endif; ?>
 
 <section class="private-toolbar">
@@ -41,6 +41,7 @@ if (!defined('APP_ENTRY')) {
                 <tr>
                     <th scope="col">Bahan</th>
                     <th scope="col">Kondisi</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Gizi / 100 g</th>
                     <th scope="col">Pembuat</th>
                     <th scope="col">Dibuat</th>
@@ -49,6 +50,11 @@ if (!defined('APP_ENTRY')) {
             </thead>
             <tbody>
                 <?php foreach ($daftar_kelola_pangan as $item) : ?>
+                    <?php
+                    $st = $item['moderation_status'] ?? 'approved';
+                    $st_label = $st === 'approved' ? 'Disetujui' : ($st === 'rejected' ? 'Ditolak' : 'Menunggu');
+                    $st_class = $st === 'approved' ? 'badge-success' : ($st === 'rejected' ? 'badge-danger' : 'badge-warning');
+                    ?>
                     <tr>
                         <td>
                             <div class="managed-food-title">
@@ -61,6 +67,12 @@ if (!defined('APP_ENTRY')) {
                             </div>
                         </td>
                         <td><span class="badge-tag badge-neutral"><?= e($item['food_state']) ?></span></td>
+                        <td>
+                            <span class="badge-tag <?= $st_class ?>"><?= e($st_label) ?></span>
+                            <?php if ($st === 'rejected' && !empty($item['rejection_reason'])) : ?>
+                                <small class="moderation-reason"><?= e($item['rejection_reason']) ?></small>
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <strong class="food-energy-val"><?= e($item['energy_kcal']) ?> kkal</strong>
                             <span class="food-macro-summary">P <?= e($item['protein_g']) ?>g · L <?= e($item['fat_g']) ?>g · K <?= e($item['carbohydrate_g']) ?>g</span>
@@ -82,6 +94,11 @@ if (!defined('APP_ENTRY')) {
 
     <div class="user-card-list">
         <?php foreach ($daftar_kelola_pangan as $item) : ?>
+            <?php
+            $st = $item['moderation_status'] ?? 'approved';
+            $st_label = $st === 'approved' ? 'Disetujui' : ($st === 'rejected' ? 'Ditolak' : 'Menunggu');
+            $st_class = $st === 'approved' ? 'badge-success' : ($st === 'rejected' ? 'badge-danger' : 'badge-warning');
+            ?>
             <article class="user-card article-manage-card food-manage-card">
                 <div class="card-manage-header">
                     <?php if (!empty($item['image_url'])) : ?>
@@ -90,10 +107,13 @@ if (!defined('APP_ENTRY')) {
                         <span class="card-manage-thumb managed-cover-fallback managed-food-fallback" aria-hidden="true">+</span>
                     <?php endif; ?>
                     <div class="card-manage-title-wrap">
-                        <p class="category-label"><?= e($item['food_state']) ?></p>
+                        <p class="category-label"><?= e($item['food_state']) ?> · <span class="badge-tag <?= $st_class ?>"><?= e($st_label) ?></span></p>
                         <h3><a href="index.php?page=pangan_detail&amp;id=<?= e($item['id']) ?>"><?= e($item['name']) ?></a></h3>
                         <small><?= e($item['energy_kcal']) ?> kkal · P <?= e($item['protein_g']) ?>g · L <?= e($item['fat_g']) ?>g · K <?= e($item['carbohydrate_g']) ?>g / 100 g</small>
                         <small><?= e($item['author']) ?> · <?= e(date('d/m/Y', strtotime($item['created_at']))) ?></small>
+                        <?php if ($st === 'rejected' && !empty($item['rejection_reason'])) : ?>
+                            <small class="moderation-reason">Alasan penolakan: <?= e($item['rejection_reason']) ?></small>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="record-actions">

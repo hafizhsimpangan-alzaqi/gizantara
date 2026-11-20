@@ -9,9 +9,9 @@ if (!defined('APP_ENTRY')) {
             <footer class="site-footer">
                 <div class="footer-grid">
                     <section class="footer-section footer-brand" aria-labelledby="footer-brand-title">
-                        <a class="wordmark" href="index.php?page=home" aria-label="Beranda — Informasi Pangan dan Kesehatan">
+                        <a class="wordmark" href="index.php?page=home" aria-label="Beranda — Gizantara, Gizi dan Kesehatan untuk Nusantara">
                             <span class="wordmark-mark" aria-hidden="true"></span>
-                            <span id="footer-brand-title">Informasi Pangan<br><span class="wordmark-light">&amp; Kesehatan</span></span>
+                            <span id="footer-brand-title">Gizantara<br><span class="wordmark-light">Gizi &amp; Kesehatan untuk Nusantara</span></span>
                         </a>
                         <p>Ruang edukasi untuk mengenal pangan, gizi, dan kesehatan sehari-hari.</p>
                     </section>
@@ -30,12 +30,14 @@ if (!defined('APP_ENTRY')) {
                     </section>
                 </div>
                 <div class="footer-bottom">
-                    <p>&copy; <?= date('Y') ?> Informasi Pangan &amp; Kesehatan</p>
+                    <p>&copy; <?= date('Y') ?> Gizantara — Gizi &amp; Kesehatan untuk Nusantara</p>
                 </div>
             </footer>
         <?php endif; ?>
     </div>
     <?php if ($layout_type !== 'login') { require __DIR__ . '/bottom_nav.php'; } ?>
 </div>
+<div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+<script src="view/js/shell.js" defer></script>
 </body>
 </html>

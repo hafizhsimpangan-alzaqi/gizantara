@@ -24,7 +24,7 @@ try {
     if (!$ditemukan) { mysqli_rollback($koneksi); http_response_code(404); exit('Artikel tidak ditemukan.'); }
     if (!boleh_ubah_konten($pemilik)) { mysqli_rollback($koneksi); http_response_code(403); exit('Akses ditolak.'); }
 
-    if (role_pengguna() === 'admin') {
+    if (adalah_admin()) {
         $hapus = mysqli_prepare($koneksi, 'DELETE FROM articles WHERE id = ?');
         mysqli_stmt_bind_param($hapus, 'i', $id_artikel);
     } else {

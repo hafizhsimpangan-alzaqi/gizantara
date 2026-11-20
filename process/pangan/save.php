@@ -158,30 +158,30 @@ try {
     if ($id_pangan) {
 
         // UPDATE pangan
-        $sql = 'UPDATE foods
-                SET name = ?,
-                    description = ?,
-                    food_state = ?,
-                    image = ?,
-                    energy_kcal = ?,
-                    protein_g = ?,
-                    fat_g = ?,
-                    carbohydrate_g = ?,
-                    source_name = ?
-                WHERE id = ?';
-
-        // User biasa hanya boleh mengedit miliknya
-        if (role_pengguna() !== 'admin') {
-            $sql .= ' AND user_id = ?';
-        }
-
-        $simpan = mysqli_prepare($koneksi, $sql);
-
-        if (role_pengguna() === 'admin') {
+        if (adalah_admin()) {
+            $id_moderator = id_user_login();
+            $simpan = mysqli_prepare(
+                $koneksi,
+                "UPDATE foods
+                 SET name = ?,
+                     description = ?,
+                     food_state = ?,
+                     image = ?,
+                     energy_kcal = ?,
+                     protein_g = ?,
+                     fat_g = ?,
+                     carbohydrate_g = ?,
+                     source_name = ?,
+                     moderation_status = 'approved',
+                     moderated_at = NOW(),
+                     moderated_by = ?,
+                     rejection_reason = NULL
+                 WHERE id = ?"
+            );
 
             mysqli_stmt_bind_param(
                 $simpan,
-                'sssssssssi',
+                'sssssssssii',
                 $nama,
                 $deskripsi,
                 $kondisi,
@@ -191,11 +191,30 @@ try {
                 $lemak,
                 $karbohidrat,
                 $sumber,
+                $id_moderator,
                 $id_pangan
             );
 
         } else {
             $id_user = id_user_login();
+            $simpan = mysqli_prepare(
+                $koneksi,
+                "UPDATE foods
+                 SET name = ?,
+                     description = ?,
+                     food_state = ?,
+                     image = ?,
+                     energy_kcal = ?,
+                     protein_g = ?,
+                     fat_g = ?,
+                     carbohydrate_g = ?,
+                     source_name = ?,
+                     moderation_status = 'pending',
+                     moderated_at = NULL,
+                     moderated_by = NULL,
+                     rejection_reason = NULL
+                 WHERE id = ? AND user_id = ?"
+            );
 
             mysqli_stmt_bind_param(
                 $simpan,
@@ -219,38 +238,78 @@ try {
         // INSERT pangan baru
         $id_user = id_user_login();
 
-        $simpan = mysqli_prepare(
-            $koneksi,
-            'INSERT INTO foods
-             (
-                user_id,
-                name,
-                description,
-                food_state,
-                image,
-                energy_kcal,
-                protein_g,
-                fat_g,
-                carbohydrate_g,
-                source_name
-             )
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        );
+        if (adalah_admin()) {
+            $simpan = mysqli_prepare(
+                $koneksi,
+                "INSERT INTO foods
+                 (
+                    user_id,
+                    name,
+                    description,
+                    food_state,
+                    image,
+                    energy_kcal,
+                    protein_g,
+                    fat_g,
+                    carbohydrate_g,
+                    source_name,
+                    moderation_status,
+                    moderated_at,
+                    moderated_by
+                 )
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'approved', NOW(), ?)"
+            );
 
-        mysqli_stmt_bind_param(
-            $simpan,
-            'isssssssss',
-            $id_user,
-            $nama,
-            $deskripsi,
-            $kondisi,
-            $gambar,
-            $energi,
-            $protein,
-            $lemak,
-            $karbohidrat,
-            $sumber
-        );
+            mysqli_stmt_bind_param(
+                $simpan,
+                'isssssssssi',
+                $id_user,
+                $nama,
+                $deskripsi,
+                $kondisi,
+                $gambar,
+                $energi,
+                $protein,
+                $lemak,
+                $karbohidrat,
+                $sumber,
+                $id_user
+            );
+        } else {
+            $simpan = mysqli_prepare(
+                $koneksi,
+                "INSERT INTO foods
+                 (
+                    user_id,
+                    name,
+                    description,
+                    food_state,
+                    image,
+                    energy_kcal,
+                    protein_g,
+                    fat_g,
+                    carbohydrate_g,
+                    source_name,
+                    moderation_status
+                 )
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')"
+            );
+
+            mysqli_stmt_bind_param(
+                $simpan,
+                'isssssssss',
+                $id_user,
+                $nama,
+                $deskripsi,
+                $kondisi,
+                $gambar,
+                $energi,
+                $protein,
+                $lemak,
+                $karbohidrat,
+                $sumber
+            );
+        }
     }
 
     // Jalankan query

@@ -3,7 +3,7 @@ if (!defined('APP_ENTRY')) { http_response_code(403); exit; }
 require_once __DIR__ . '/../common/upload.php';
 try {
     $koneksi = koneksi_database();
-    if (role_pengguna() === 'admin') {
+    if (adalah_admin()) {
         $hasil = mysqli_query($koneksi, 'SELECT f.*, u.username AS author FROM foods f JOIN users u ON u.id=f.user_id ORDER BY f.created_at DESC, f.id DESC');
     } else {
         $id_user = id_user_login();

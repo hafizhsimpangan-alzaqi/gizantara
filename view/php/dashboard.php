@@ -15,16 +15,20 @@ if (!defined('APP_ENTRY')) {
 
 $dashboard_cards = $dashboard_admin
     ? [
-        ['Artikel', $jumlah_artikel, 'Seluruh artikel terdaftar', 'artikel_kelola'],
-        ['Bahan pangan', $jumlah_pangan, 'Seluruh bahan pangan terdaftar', 'pangan_kelola'],
+        ['Artikel', $jumlah_artikel, $jumlah_pending_artikel > 0 ? $jumlah_pending_artikel . ' menunggu moderasi' : 'Seluruh artikel terdaftar', 'artikel_kelola'],
+        ['Bahan pangan', $jumlah_pangan, $jumlah_pending_pangan > 0 ? $jumlah_pending_pangan . ' menunggu moderasi' : 'Seluruh bahan pangan terdaftar', 'pangan_kelola'],
+        ['Antrean moderasi', $jumlah_pending_artikel + $jumlah_pending_pangan, 'Artikel: ' . $jumlah_pending_artikel . ' · Pangan: ' . $jumlah_pending_pangan, $jumlah_pending_artikel >= $jumlah_pending_pangan ? 'moderasi_artikel' : 'moderasi_pangan'],
         ['User', $jumlah_user, 'Akun User terdaftar', 'users'],
         ['Catatan pribadi', $jumlah_catatan, 'Monitoring milik akun ini', 'monitoring'],
     ]
     : [
-        ['Artikel saya', $jumlah_artikel, 'Artikel milik akun ini', 'artikel_kelola'],
-        ['Bahan pangan saya', $jumlah_pangan, 'Bahan milik akun ini', 'pangan_kelola'],
+        ['Artikel saya', $jumlah_artikel, ($status_artikel['approved'] ?? 0) . ' disetujui · ' . ($status_artikel['pending'] ?? 0) . ' menunggu · ' . ($status_artikel['rejected'] ?? 0) . ' ditolak', 'artikel_kelola'],
+        ['Bahan pangan saya', $jumlah_pangan, ($status_pangan['approved'] ?? 0) . ' disetujui · ' . ($status_pangan['pending'] ?? 0) . ' menunggu · ' . ($status_pangan['rejected'] ?? 0) . ' ditolak', 'pangan_kelola'],
         ['Catatan pribadi', $jumlah_catatan, 'Riwayat monitoring milik akun ini', 'monitoring'],
     ];
+if (!empty($dashboard_super_admin)) {
+    array_splice($dashboard_cards, 3, 0, [['Admin', $jumlah_admin ?? 0, 'Akun Admin terdaftar', 'admins']]);
+}
 
 $tindakan_cepat = [
     ['artikel_form', 'Tulis Artikel Baru', 'Buat artikel edukasi pangan atau kesehatan.', 'M12 20h9M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z'],
@@ -33,11 +37,16 @@ $tindakan_cepat = [
     ['monitoring_form', 'Catat Pola Hidup', 'Simpan catatan air, tidur, dan aktivitas.', 'M4 19V5m0 14h16M7 15l4-5 3 2 5-7'],
 ];
 if ($dashboard_admin) {
-    $tindakan_cepat[] = ['users', 'Kelola Akun User', 'Buat atau kelola akun User.', 'M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2m14-10a4 4 0 1 0 0-8m4 18v-2a4 4 0 0 0-3-3.87M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z'];
+    $tindakan_cepat[] = ['moderasi_artikel', 'Moderasi Artikel', 'Tinjau artikel User sebelum terbit.', 'M9 12l2 2 4-4m5 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'];
+    $tindakan_cepat[] = ['moderasi_pangan', 'Moderasi Pangan', 'Tinjau bahan pangan User sebelum terbit.', 'M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2'];
+    $tindakan_cepat[] = ['users', 'Kelola Akun User', 'Buat, blokir, atau hapus akun User.', 'M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2m14-10a4 4 0 1 0 0-8m4 18v-2a4 4 0 0 0-3-3.87M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z'];
+}
+if (!empty($dashboard_super_admin)) {
+    $tindakan_cepat[] = ['admins', 'Kelola Akun Admin', 'Buat, blokir, atau hapus akun Admin.', 'M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2Zm10-10V7a4 4 0 0 0-8 0v4h8Z'];
 }
 ?>
 <section class="page-intro private-intro">
-    <p class="eyebrow"><span class="eyebrow-line"></span> <?= $dashboard_admin ? 'RUANG ADMIN' : 'RUANG USER' ?></p>
+    <p class="eyebrow"><span class="eyebrow-line"></span> <?= !empty($dashboard_super_admin) ? 'RUANG SUPER ADMIN' : ($dashboard_admin ? 'RUANG ADMIN' : 'RUANG USER') ?></p>
     <h1>Dashboard</h1>
     <p class="page-lead">Ringkasan data <?= $dashboard_admin ? 'platform dan catatan pribadi akun ini' : 'milik akun ini' ?>.</p>
 </section>

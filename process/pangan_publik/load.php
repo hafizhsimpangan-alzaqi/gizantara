@@ -34,7 +34,8 @@ try {
                 energy_kcal,
                 description
             FROM foods
-            WHERE name LIKE ?
+            WHERE moderation_status = 'approved'
+              AND name LIKE ?
             ORDER BY created_at DESC, id DESC";
 
     // Prepared statement

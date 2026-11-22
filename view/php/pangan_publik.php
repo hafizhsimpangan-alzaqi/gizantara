@@ -1,8 +1,4 @@
 <?php
-/** Data disiapkan index.php dan loader route sebelum template dirender.
- * @var string $q
- * @var array<int, array<string, mixed>> $daftar_pangan
- */
 
 if (!defined('APP_ENTRY')) {
     http_response_code(403);

@@ -1,5 +1,3 @@
-/* Gizantara Design System — CR-04: Modern Nature & Wellness */
-
 @font-face {
     font-family: "Plus Jakarta Sans";
     font-style: normal;
@@ -89,7 +87,6 @@
     --color-warning-border: #fde68a;
     --color-warning-text: #92400e;
 
-    /* Alias kompatibilitas untuk selektor legacy */
     --color-bg: var(--color-background);
     --color-muted: var(--color-text-muted);
     --color-blue: var(--color-primary);
@@ -142,7 +139,6 @@ h1, h2, h3, h4, h5, h6, .wordmark, .sidebar-brand, .not-found-number, .sdg-numbe
 h1, h2, h3, h4, p { overflow-wrap: anywhere; }
 h1, h2, h3, h4 { line-height: 1.2; }
 
-/* Shell dan kontainer utama */
 .app-shell { min-height: 100vh; }
 .page-column { min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
 .page-content { width: min(100%, 1600px); min-width: 0; flex: 1 0 auto; margin: 0 auto; padding: var(--space-6) var(--space-4) calc(var(--nav-height) + var(--space-8) + env(safe-area-inset-bottom)); }
@@ -173,7 +169,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .footer-bottom { width: min(100%, 1600px); margin: var(--space-6) auto 0; padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
 .footer-bottom p { margin: 0; }
 
-/* Komponen global: Button */
 .button { min-height: 48px; padding: 10px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; line-height: 1.3; text-align: center; text-decoration: none; cursor: pointer; transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast); }
 .button:disabled, button:disabled { opacity: 0.55; cursor: not-allowed; }
 .button-primary { background: var(--color-primary); border-color: var(--color-primary); color: #ffffff; }
@@ -193,18 +188,15 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .moderation-reason { display: block; margin-top: 4px; color: var(--color-error-text); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
 .moderation-history { margin-top: var(--space-6); }
 
-/* Komponen global: Card */
 .card, .article-card, .food-card, .metric-card, .form-card, .calculator-result, .user-card, .monitoring-card, .sdg-card, .about-sdg-card, .about-feature-card, .secondary-menu-item, .login-card, .user-table-wrap, .confirm-dialog { min-width: 0; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
 .card { width: 100%; padding: var(--space-5); }
 
-/* Komponen global: Alert & Status Feedback */
 .alert, .form-status:not(:empty) { width: 100%; margin: var(--space-4) 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm); border: 1px solid var(--color-success-border); border-left: 4px solid var(--color-success-text); background: var(--color-success-bg); color: var(--color-success-text); font-size: 14px; font-weight: 600; line-height: 1.5; }
 .alert-success { border-color: var(--color-success-border); border-left-color: var(--color-success-text); background: var(--color-success-bg); color: var(--color-success-text); }
 .alert-error, .form-status.is-error:not(:empty) { border-color: var(--color-error-border); border-left-color: var(--color-error-text); background: var(--color-error-bg); color: var(--color-error-text); }
 .alert-warning, .about-disclaimer { border: 1px solid var(--color-warning-border); border-left: 4px solid var(--color-warning-text); border-radius: var(--radius-sm); background: var(--color-warning-bg); color: var(--color-warning-text); }
 .form-status:empty { min-height: 0; margin: 0; padding: 0; border: 0; background: transparent; }
 
-/* Komponen global: Empty State */
 .empty-state { width: 100%; grid-column: 1 / -1; min-height: 220px; padding: var(--space-8) var(--space-6); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--color-surface); border: 1px dashed var(--color-input-border); border-radius: var(--radius-lg); }
 .empty-state h2, .empty-state h3, .empty-state h1 { margin: var(--space-4) 0 0; font-size: 20px; letter-spacing: -0.02em; }
 .empty-state p { max-width: 52ch; margin: var(--space-2) 0 0; color: var(--color-text-muted); font-size: 14px; }
@@ -215,7 +207,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .empty-mark-green { border-color: var(--color-success-text); border-radius: var(--radius-sm); background: var(--color-success-bg); }
 .empty-mark-green::before, .empty-mark-green::after { background: var(--color-success-text); }
 
-/* Komponen global: Dialog / Modal Konfirmasi */
 .confirm-dialog { width: min(calc(100% - 32px), 440px); padding: var(--space-6); color: var(--color-text); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-dialog); }
 .confirm-dialog::backdrop { background: rgba(15, 23, 42, 0.45); }
 .confirm-dialog h2 { margin: 0; font-size: 20px; }
@@ -225,7 +216,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .confirm-dialog form .button-primary { background: var(--color-error-text); border-color: var(--color-error-text); color: #ffffff; }
 .confirm-dialog form .button-primary:hover:not(:disabled) { background: var(--color-error-hover); border-color: var(--color-error-hover); }
 
-/* Tipografi & Konten Publik */
 .hero { display: grid; gap: var(--space-6); padding: var(--space-6) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
 .hero-copy { min-width: 0; align-self: center; }
 .eyebrow { margin: 0 0 var(--space-2); color: var(--color-text-muted); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; line-height: 1.4; text-transform: uppercase; }
@@ -262,7 +252,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .article-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: var(--space-5); }
 .food-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: var(--space-5) var(--space-4); }
 
-/* Single card dalam grid membentang penuh (D-07 / UI-AC-05) */
 .content-grid > :only-child,
 .article-grid > :only-child,
 .food-grid > :only-child,
@@ -296,7 +285,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 
 .food-section { padding-bottom: var(--space-3); }
 
-/* Intro halaman & pencarian — full-width container, batas baca pada teks deskripsi */
 .page-intro { width: 100%; max-width: 100%; padding: var(--space-4) 0 var(--space-5); }
 .page-intro h1 { margin: 0; font-size: clamp(1.75rem, 2vw + 1rem, 2.75rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.025em; }
 .page-lead { max-width: 68ch; margin: var(--space-3) 0 0; color: var(--color-text-secondary); font-size: 16px; line-height: 1.6; }
@@ -316,7 +304,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .listing-grid { padding-top: var(--space-1); }
 .listing-empty { margin-top: var(--space-2); }
 
-/* Detail Artikel & Pangan — container full-width, bacaan 65-75ch di dalam */
 .reading-page { width: 100%; max-width: 100%; margin: 0; }
 .back-link { min-height: 44px; padding: 0 var(--space-2); margin-left: calc(var(--space-2) * -1); display: inline-flex; align-items: center; gap: 8px; color: var(--color-primary); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: var(--radius-sm); }
 .back-link:hover { background: var(--color-primary-soft); color: var(--color-primary-hover); }
@@ -351,14 +338,12 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .source-note { margin: var(--space-4) 0 0; color: var(--color-text-muted); font-size: 14px; }
 .source-note strong { color: var(--color-text); }
 
-/* 404 */
 .not-found { width: 100%; max-width: 100%; min-height: 58vh; margin: 0; padding: var(--space-8) 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
 .not-found-number { margin: var(--space-2) 0 0; color: var(--color-primary); font-size: clamp(4rem, 12vw, 7.5rem); font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
 .not-found h1 { margin: var(--space-4) 0 0; font-size: clamp(1.5rem, 3vw + 0.8rem, 2.5rem); letter-spacing: -0.025em; }
 .not-found > p:not(.eyebrow) { max-width: 55ch; margin: var(--space-3) 0 var(--space-6); color: var(--color-text-muted); }
 .not-found .button { align-self: flex-start; }
 
-/* About */
 .about-page { width: 100%; }
 .about-hero { display: grid; gap: var(--space-6); padding: var(--space-6) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
 .about-hero-copy { min-width: 0; }
@@ -401,7 +386,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .about-disclaimer-mark { width: 24px; height: 24px; flex: 0 0 24px; display: grid; place-items: center; border-radius: 50%; background: var(--color-warning-text); color: #ffffff; font-size: 14px; font-weight: 700; }
 .about-disclaimer p { margin: 0; color: var(--color-warning-text); font-size: 14px; line-height: 1.6; }
 
-/* Privat, Dashboard, Kelola Data, Outlined Form (D-05, D-08, D-10, D-16) */
 .layout-private .page-content { padding-top: var(--space-5); }
 .private-intro { padding-top: var(--space-2); }
 .private-intro h1 { margin: 0; }
@@ -437,7 +421,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .private-toolbar h2 { margin: 0; font-size: 20px; }
 .private-toolbar p { margin: var(--space-1) 0 0; color: var(--color-text-muted); font-size: 14px; }
 
-/* Single form & card selalu 100% lebar area konten (DESAIGN.md §3, UI-AC-05) */
 .form-card { width: 100%; max-width: 100%; margin: var(--space-6) 0; }
 .form-stack { display: grid; gap: var(--space-4); }
 .form-field { min-width: 0; display: grid; gap: 6px; align-content: start; }
@@ -523,14 +506,12 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .cover-preview img { width: 100%; max-height: 280px; object-fit: contain; background: var(--color-surface); border-radius: 6px; }
 .cover-preview p { margin: var(--space-2) 0 0; color: var(--color-text-muted); font-size: 14px; }
 
-/* Quill Editor full-width dan bebas overflow */
 .quill-editor, .ql-toolbar.ql-snow, .ql-container.ql-snow { width: 100%; max-width: 100%; min-width: 0; }
 .quill-editor { min-height: 260px; background: var(--color-surface); }
 .ql-toolbar.ql-snow { display: flex; flex-wrap: wrap; border-color: var(--color-input-border) !important; border-radius: var(--radius-sm) var(--radius-sm) 0 0; background: var(--color-surface-muted); }
 .ql-container.ql-snow { border-color: var(--color-input-border) !important; border-radius: 0 0 var(--radius-sm) var(--radius-sm); font-family: var(--font-body); font-size: 16px; }
 .quill-editor .ql-editor { min-height: 220px; font: inherit; line-height: 1.7; color: var(--color-text); }
 
-/* Kalkulator & Monitoring (D-16 Responsive Split Workspace) */
 .calculator-layout { width: 100%; display: grid; gap: var(--space-5); align-items: start; }
 .calculator-layout .form-card { margin: 0; }
 .calculator-result { width: 100%; }
@@ -549,7 +530,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .record-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .record-actions .button { min-height: 44px; min-width: 44px; padding: 8px 14px; font-size: 14px; }
 
-/* Login / Register */
 .layout-login .page-content { width: min(100%, 1600px); padding-top: var(--space-6); padding-bottom: var(--space-10); }
 .login-page { width: 100%; min-height: min(680px, calc(100vh - 150px)); display: grid; align-items: center; gap: var(--space-6); }
 .auth-brand { min-width: 0; min-height: 184px; order: 2; padding: var(--space-6); display: flex; flex-direction: column; justify-content: center; background: var(--color-primary-soft); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
@@ -565,7 +545,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .login-register-link { margin: var(--space-4) 0 0; color: var(--color-text-muted); font-size: 14px; }
 .login-register-link a { color: var(--color-primary); font-weight: 600; }
 
-/* Monitoring */
 .monitoring-workspace { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); align-items: start; margin-top: var(--space-4); }
 .monitoring-summary-panel { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); }
 .monitoring-summary-panel h2 { margin: 0; font-size: 20px; }
@@ -592,7 +571,6 @@ h1, h2, h3, h4 { line-height: 1.2; }
 .monitoring-values dd { margin: 2px 0 0; font-family: var(--font-body); font-weight: 700; color: var(--color-text); overflow-wrap: anywhere; }
 .monitoring-card .record-actions { margin-left: auto; }
 
-/* CR-04: editorial sections and feedback shared by public and private shells. */
 .sdg-food .sdg-number, .about-sdg-food .about-sdg-number { color: var(--color-sdg2); }
 .sdg-health .sdg-number, .about-sdg-health .about-sdg-number { color: var(--color-sdg3); }
 .sdg-food, .about-sdg-food { border-top: 3px solid var(--color-sdg2-accent); }

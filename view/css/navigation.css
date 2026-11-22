@@ -1,5 +1,3 @@
-/* Gizantara navigation shell — CR-04 */
-
 .sidebar { display: none; }
 .public-nav { display: none; }
 .header-actions { display: none; align-items: center; justify-content: flex-end; gap: var(--space-2); white-space: nowrap; }
@@ -9,7 +7,6 @@
 .public-nav a:hover { background: var(--color-surface-muted); color: var(--color-text); }
 .public-nav a[aria-current="page"] { color: var(--color-primary); background: var(--color-primary-soft); box-shadow: inset 0 -2px 0 var(--color-primary); }
 
-/* Mobile Icon-Only Bottom Navigation (<768px) */
 .bottom-nav { position: fixed; z-index: 20; right: 0; bottom: 0; left: 0; min-height: calc(var(--nav-height) + env(safe-area-inset-bottom)); padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: space-around; gap: var(--space-2); overflow-x: auto; background: rgba(255, 255, 255, 0.98); border-top: 1px solid var(--color-border); box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.04); }
 .bottom-nav a { width: 48px; height: 48px; min-width: 44px; min-height: 44px; flex: none; position: relative; display: inline-flex; align-items: center; justify-content: center; color: var(--color-text-muted); border-radius: var(--radius-md); text-decoration: none; transition: background-color var(--transition-fast), color var(--transition-fast); }
 .bottom-nav a svg, .sidebar .nav-link svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; }
@@ -17,7 +14,6 @@
 .bottom-nav a.is-active, .bottom-nav a[aria-current="page"] { color: var(--color-primary); background: var(--color-primary-soft); box-shadow: inset 0 -3px 0 var(--color-primary); }
 .bottom-nav a[aria-current="page"]::after { content: ""; width: 4px; height: 4px; position: absolute; bottom: 5px; border-radius: 50%; background: var(--color-primary); }
 
-/* Sidebar Privat */
 .sidebar { width: 76px; min-height: 100vh; position: sticky; top: 0; align-self: start; padding: var(--space-5) 10px; flex-direction: column; align-items: center; background: var(--color-surface); border-right: 1px solid var(--color-border); }
 .sidebar-brand { min-height: 48px; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--color-text); text-decoration: none; border-radius: var(--radius-sm); }
 .brand-square { width: 38px; height: 38px; flex: none; display: grid; place-items: center; background: var(--color-primary); color: #ffffff; border-radius: var(--radius-sm); font-size: 17px; font-weight: 800; }

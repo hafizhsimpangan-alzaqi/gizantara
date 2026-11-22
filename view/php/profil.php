@@ -1,6 +1,6 @@
 <?php
 if (!defined('APP_ENTRY')) { http_response_code(403); exit; }
-/** @var array{username:string,email:?string,role:string} $profil */
+
 $profile_errors = is_array($profile_state['errors'] ?? null) ? $profile_state['errors'] : [];
 $profile_form = $profile_state['form'] ?? '';
 $username_value = $profile_form === 'username' && is_string($profile_state['username'] ?? null)

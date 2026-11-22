@@ -1,10 +1,5 @@
 
 <?php
-/** Data disiapkan index.php dan loader route sebelum template dirender.
- * @var string $q
- * @var string $kategori
- * @var array<int, array<string, mixed>> $daftar_artikel
- */
 
 if (!defined('APP_ENTRY')) {
     http_response_code(403);

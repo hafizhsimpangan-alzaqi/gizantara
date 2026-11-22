@@ -1,7 +1,5 @@
 <?php
-/** Data disiapkan index.php dan loader route sebelum template dirender.
- * @var array<int, array<string, mixed>> $opsi_pangan
- */
+
 
 if (!defined('APP_ENTRY')) {
     http_response_code(403);

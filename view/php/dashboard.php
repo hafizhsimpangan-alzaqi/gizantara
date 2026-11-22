@@ -1,12 +1,5 @@
 <?php
-/** Data disiapkan index.php dan loader route sebelum template dirender.
- * @var bool $dashboard_admin
- * @var int $jumlah_artikel
- * @var int $jumlah_pangan
- * @var int $jumlah_user
- * @var int $jumlah_catatan
- * @var array<string, mixed>|null $catatan_terakhir
- */
+
 
 if (!defined('APP_ENTRY')) {
     http_response_code(403);

@@ -1,7 +1,5 @@
 <?php
-/** Data disiapkan index.php dan loader route sebelum template dirender.
- * @var array{jenis: string, teks: string}|null $pesan
- */
+
  if (!defined('APP_ENTRY')) { http_response_code(403); exit; } ?>
 <section class="login-page" aria-labelledby="login-title">
     <div class="login-card">

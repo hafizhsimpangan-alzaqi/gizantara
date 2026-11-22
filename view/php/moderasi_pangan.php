@@ -1,9 +1,5 @@
 <?php
-/** Data disiapkan index.php dan process/moderasi/load.php sebelum template dirender.
- * @var array<int, array<string, mixed>> $antrean_moderasi
- * @var array<int, array<string, mixed>> $riwayat_moderasi
- * @var array{jenis: string, teks: string}|null $pesan
- */
+
 
 if (!defined('APP_ENTRY')) {
     http_response_code(403);

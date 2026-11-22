@@ -1,9 +1,4 @@
 <?php
-/** Data disiapkan index.php dan loader route sebelum template dirender.
- * @var string $user_role
- * @var array<int, array<string, mixed>> $daftar_kelola
- * @var array{jenis: string, teks: string}|null $pesan
- */
 
 if (!defined('APP_ENTRY')) {
     http_response_code(403);

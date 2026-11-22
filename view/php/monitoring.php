@@ -1,8 +1,5 @@
 <?php
-/** Data disiapkan index.php dan loader route sebelum template dirender.
- * @var array<int, array<string, mixed>> $daftar_catatan
- * @var array{jenis: string, teks: string}|null $pesan
- */
+
 
 if (!defined('APP_ENTRY')) {
     http_response_code(403);
@@ -33,6 +30,7 @@ $catatan_terbaru = $daftar_catatan[0] ?? null;
 
         <?php if ($catatan_terbaru) : ?>
             <div class="monitoring-latest-box">
+                
                 <p class="monitoring-latest-date">
                     Terakhir dicatat: <time datetime="<?= e($catatan_terbaru['log_date']) ?>"><strong><?= e(date('d/m/Y', strtotime($catatan_terbaru['log_date']))) ?></strong></time>
                 </p>

@@ -1,8 +1,4 @@
 <?php
-/** Data disiapkan index.php dan loader route sebelum template dirender.
- * @var array<string, mixed>|null $pangan_form
- * @var array{jenis: string, teks: string}|null $pesan
- */
 
 if (!defined('APP_ENTRY')) {
     http_response_code(403);

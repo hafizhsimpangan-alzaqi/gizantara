@@ -18,19 +18,23 @@
    d. Mendorong kebiasaan sehat lewat pencatatan air minum, tidur, dan aktivitas fisik. <br>
 
 3. DAFTAR FITUR DAN MODUL <br>
-   a. Registrasi & Login (Pendaftaran akun (username, email, password minimal 8 karakter) dan masuk untuk membuka fitur pribadi). <br>
-   b.	Artikel Edukasi	(Bacaan seputar pangan, gizi, dan kesehatan. Setiap artikel ditandai SDG terkait, memiliki tanggal terbit, dan halaman detail). <br>
-   c. Katalog Pangan (Daftar bahan pangan dengan informasi gizi per 100 gram, kondisi penyajian (mis. direbus atau matang), dan pencarian berdasarkan nama bahan). <br>
-   d. Kalkulator Gizi	(Memperkirakan kandungan gizi satu bahan pangan sesuai beratnya). <br>
-   e.	Monitoring Pola Hidup	(Mencatat air minum, tidur, dan aktivitas fisik secara pribadi). <br>
-   f.	Tentang Kami	(Halaman yang menjelaskan tujuan, manfaat, dan kontribusi Gizantara terhadap SDGs). <br>
-   g.	Catatan Edukatif	(Pernyataan bahwa seluruh konten bersifat edukatif, bukan pengganti saran tenaga kesehatan). <br>
+   a. Autentikasi (registrasi & login) <br>
+   b. Artikel Edukasi <br>
+   c. Katalog Pangan <br>
+   d. Kalkulator Gizi <br>
+   e. Monitoring Pola Hidup <br>
+   f. Dashboard <br>
+   g. Manajeman User <br>
+   h. Manajemen Admin <br>
+   i. Manajemen Artikel <br>
+   j. Manajemen Katalog Pangan <br>
+   k. Profile <br>
 
-4. TEKNOLOGI YANG DIGUNAKAN <br>
+5. TEKNOLOGI YANG DIGUNAKAN <br>
    a. Bahasa Pemrograman (PHP, CSS, HTML, JS) <br>
    b. Database (MySql)
 
-5. PANDUAN INSTALASI DAN KONFIGURASI
+6. PANDUAN INSTALASI DAN KONFIGURASI
    INSTALASI
    Cara singkat menjalankan [Gizantara](https://github.com/hafizhsimpangan-alzaqi/gizantara) di komputer lokal. Disarankan memakai **XAMPP untuk Windows** atau **LAMPP/XAMPP untuk Linux** (Apache, PHP, MySQL/MariaDB, dan phpMyAdmin).
    ## 1. Clone repositori
@@ -71,7 +75,7 @@
       Nilai `root` tanpa password hanya contoh untuk XAMPP lokal; sesuaikan jika database menggunakan kredensial atau port lain.
       Buat folder **`view/uploads/artikel`** dan **`view/uploads/pangan`**, lalu pastikan keduanya dapat ditulis oleh Apache/PHP agar unggah gambar berfungsi.
 
-6. PANDUAN MENJALANKAN APLIKASI
+7. PANDUAN MENJALANKAN APLIKASI
    ## Jalankan Gizantara
    Pastikan **Apache** dan **MySQL** aktif, lalu buka:
    **http://localhost/gizantara/**
